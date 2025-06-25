@@ -3,189 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>脳トレーニング - 前頭前野を鍛えよう</title>
-    <meta name="description" content="前頭前野を鍛える包括的な脳トレーニングアプリ">
-    <meta name="theme-color" content="#21808D">
-
-    <!-- アイコン（SVG を Base64 埋め込み） -->
-    <link rel="icon" type="image/png" sizes="192x192"
-          href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIxOTIiIHJ4PSIyNCIgZmlsbD0iIzIxODA4RCIvPjxzdmcgeD0iNDgiIHk9IjQ4IiB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZDRkNGOSI+PHN0cm9rZT0iI0ZDRkNGOSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Im0yMiAyIC03IDYuNWgzIi8+PHBhdGggZD0iTTMgM2gxOHYxOEgzVjN6Ii8+PHN0cm9rZT0iI0ZDRkNGOSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Im03IDggNCA0IDQtNCIvPjxzdHJva2U9IiNGQ0ZDRjkiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJtMTMgMTYgNCA0IDQtNCIvPjwvc3ZnPjwvc3ZnPg==">
-
-    <link rel="apple-touch-icon"
-          href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIxOTIiIHJ4PSIyNCIgZmlsbD0iIzIxODA4RCIvPjxzdmcgeD0iNDgiIHk9IjQ4IiB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZDRkNGOSI+PHN0cm9rZT0iI0ZDRkNGOSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Im0yMiAyIC03IDYuNWgzIi8+PHBhdGggZD0iTTMgM2gxOHYxOEgzVjN6Ii8+PHN0cm9rZT0iI0ZDRkNGOSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Im03IDggNCA0IDQtNCIvPjxzdHJva2U9IiNGQ0ZDRjkiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJtMTMgMTYgNCA0IDQtNCIvPjwvc3ZnPjwvc3ZnPg==">
-
+    <title>脳トレーニング PWA</title>
+    <meta name="description" content="12種類の脳トレーニングゲームで集中力・判断力を向上">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#21808d">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<!-- Loading Screen -->
-<div id="loading-screen" class="screen">
-    <div class="loading-container">
-        <div class="brain-icon">🧠</div>
-        <h1>脳トレーニング</h1>
-        <p>前頭前野を鍛えよう</p>
-        <div class="loading-spinner"></div>
-    </div>
-</div>
-
-<!-- Welcome Screen -->
-<div id="welcome-screen" class="screen hidden">
-    <div class="welcome-container">
-        <div class="brain-icon large">🧠</div>
-        <h1>脳トレーニングへようこそ！</h1>
-        <p>前頭前野を鍛えて、集中力・判断力・創造性を向上させましょう</p>
-
-        <div class="feature-list">
-            <div class="feature-item"><span class="feature-icon">🎯</span><span>12種類のトレーニング</span></div>
-            <div class="feature-item"><span class="feature-icon">📈</span><span>成長が見える統計機能</span></div>
-            <div class="feature-item"><span class="feature-icon">🏆</span><span>やりがいを感じるバッジシステム</span></div>
+    <!-- ローディング画面 -->
+    <div id="loading-screen" class="screen">
+        <div class="loading-container">
+            <div class="loading-spinner"></div>
+            <h2>脳トレーニング</h2>
+            <p>ロード中...</p>
         </div>
-        <button class="btn btn--primary btn--lg" id="start-app-btn">はじめる</button>
     </div>
-</div>
 
-<!-- Main App -->
-<div id="main-app" class="hidden">
-    <!-- Navigation -->
-    <nav class="nav-bar">
-        <div class="nav-brand"><span class="brain-icon">🧠</span><span class="nav-title">脳トレーニング</span></div>
-        <div class="nav-menu">
-            <button class="nav-item active" data-screen="dashboard">ホーム</button>
-            <button class="nav-item" data-screen="games">ゲーム</button>
-            <button class="nav-item" data-screen="stats">統計</button>
-            <button class="nav-item" data-screen="settings">設定</button>
+    <!-- ウェルカム画面 -->
+    <div id="welcome-screen" class="screen hidden">
+        <div class="welcome-container">
+            <div class="welcome-header">
+                <h1>🧠 脳トレーニング</h1>
+                <p class="welcome-subtitle">前頭前野を鍛えて集中力・判断力・創造性を向上</p>
+            </div>
+            <div class="welcome-features">
+                <div class="feature-item">
+                    <div class="feature-icon">🎯</div>
+                    <h3>12種類のゲーム</h3>
+                    <p>様々な脳機能を鍛える多彩なゲーム</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <h3>進捗管理</h3>
+                    <p>詳細な統計とレベルシステム</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🏆</div>
+                    <h3>バッジシステム</h3>
+                    <p>達成に応じたバッジを獲得</p>
+                </div>
+            </div>
+            <button class="btn btn--primary btn--lg" id="start-btn">はじめる</button>
         </div>
-    </nav>
+    </div>
 
-    <!-- Dashboard Screen -->
-    <div id="dashboard-screen" class="app-screen">
-        <div class="container">
+    <!-- メインアプリ -->
+    <div id="main-app" class="hidden">
+        <!-- ヘッダー -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="app-title">脳トレーニング</h1>
+                <div class="header-actions">
+                    <button class="btn btn--secondary btn--sm" id="theme-toggle">🌙</button>
+                    <div class="user-info">
+                        <span class="user-level">Lv.<span id="user-level">1</span></span>
+                        <span class="user-points"><span id="user-points">0</span>pt</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- ナビゲーション -->
+        <nav class="app-nav">
+            <button class="nav-btn active" data-screen="dashboard">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">ダッシュボード</span>
+            </button>
+            <button class="nav-btn" data-screen="games">
+                <span class="nav-icon">🎮</span>
+                <span class="nav-label">ゲーム</span>
+            </button>
+            <button class="nav-btn" data-screen="stats">
+                <span class="nav-icon">📊</span>
+                <span class="nav-label">統計</span>
+            </button>
+            <button class="nav-btn" data-screen="settings">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-label">設定</span>
+            </button>
+        </nav>
+
+        <!-- ダッシュボード画面 -->
+        <div id="dashboard-screen" class="app-screen">
             <div class="dashboard-header">
-                <h1>今日のトレーニング</h1>
-                <p class="date-display" id="current-date"></p>
+                <h2>今日の進捗</h2>
+                <div class="streak-counter">
+                    <span class="streak-number" id="streak-days">0</span>
+                    <span class="streak-label">日連続</span>
+                </div>
             </div>
-
-            <div class="stats-grid">
-                <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-value" id="daily-goal-progress">0/5</div><div class="stat-label">今日の目標</div></div>
-                <div class="stat-card"><div class="stat-icon">⭐</div><div class="stat-value" id="total-points">0</div><div class="stat-label">総ポイント</div></div>
-                <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-value" id="current-level">1</div><div class="stat-label">レベル</div></div>
-                <div class="stat-card"><div class="stat-icon">🔥</div><div class="stat-value" id="streak-count">0</div><div class="stat-label">連続日数</div></div>
-            </div>
-
-            <div class="progress-section">
-                <h3>今日の進捗</h3>
-                <div class="progress-bar-container">
-                    <div class="progress-bar"><div class="progress-fill" id="daily-progress"></div></div>
-                    <span class="progress-text" id="progress-text">0%</span>
+            
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-info">
+                        <div class="stat-number" id="today-games">0</div>
+                        <div class="stat-label">今日のゲーム</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-info">
+                        <div class="stat-number" id="avg-reaction">0ms</div>
+                        <div class="stat-label">平均反応時間</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-info">
+                        <div class="stat-number" id="total-badges">0</div>
+                        <div class="stat-label">獲得バッジ</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="quick-games">
+            <div class="recommended-games">
                 <h3>おすすめゲーム</h3>
-                <div class="quick-game-grid" id="recommended-games"></div>
+                <div class="game-grid" id="recommended-games">
+                    <!-- 動的に生成 -->
+                </div>
             </div>
 
             <div class="recent-badges" id="recent-badges">
-                <h3>最近の達成</h3>
-                <div class="badge-list"></div>
+                <h3>最近のバッジ</h3>
+                <div class="badge-list" id="badge-list">
+                    <!-- 動的に生成 -->
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Games Screen -->
-    <div id="games-screen" class="app-screen hidden">
-        <div class="container">
-            <h1>ゲーム選択</h1>
-            <div class="games-grid" id="games-list"></div>
+        <!-- ゲーム選択画面 -->
+        <div id="games-screen" class="app-screen hidden">
+            <h2>ゲーム選択</h2>
+            <div class="game-grid" id="all-games">
+                <!-- 動的に生成 -->
+            </div>
         </div>
-    </div>
 
-    <!-- Game Play Screen -->
-    <div id="game-screen" class="app-screen hidden">
-        <div class="game-header">
-            <button class="btn btn--outline" id="back-to-games">← 戻る</button>
-            <h2 class="game-title"></h2>
-            <div class="game-stats"><span id="game-score">0pt</span><span id="game-time">0:00</span></div>
+        <!-- ゲームプレイ画面 -->
+        <div id="game-play-screen" class="app-screen hidden">
+            <div class="game-header">
+                <button class="btn btn--outline btn--sm" id="back-to-games">← 戻る</button>
+                <h2 id="current-game-title">ゲーム</h2>
+                <div class="game-timer">
+                    <span id="game-timer">0:00</span>
+                </div>
+            </div>
+            <div class="game-content" id="game-content">
+                <!-- 各ゲームの内容が動的に生成 -->
+            </div>
         </div>
-        <div class="game-container"></div>
-    </div>
 
-    <!-- Stats Screen -->
-    <div id="stats-screen" class="app-screen hidden">
-        <div class="container">
-            <h1>統計</h1>
+        <!-- 結果画面 -->
+        <div id="result-screen" class="app-screen hidden">
+            <div class="result-container">
+                <h2>結果</h2>
+                <div class="result-score">
+                    <div class="score-item">
+                        <span class="score-label">スコア</span>
+                        <span class="score-value" id="result-score">0</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-label">正解率</span>
+                        <span class="score-value" id="result-accuracy">0%</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-label">平均反応時間</span>
+                        <span class="score-value" id="result-reaction">0ms</span>
+                    </div>
+                </div>
+                <div class="result-badges" id="result-badges">
+                    <!-- 新しく獲得したバッジ -->
+                </div>
+                <div class="result-actions">
+                    <button class="btn btn--secondary" id="play-again">もう一度</button>
+                    <button class="btn btn--primary" id="back-to-dashboard">ダッシュボード</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 統計画面 -->
+        <div id="stats-screen" class="app-screen hidden">
             <div class="stats-tabs">
                 <button class="tab-btn active" data-tab="overview">概要</button>
                 <button class="tab-btn" data-tab="games">ゲーム別</button>
                 <button class="tab-btn" data-tab="progress">進捗</button>
             </div>
-            <div id="stats-content"></div>
-        </div>
-    </div>
-
-    <!-- Settings Screen -->
-    <div id="settings-screen" class="app-screen hidden">
-        <div class="container">
-            <h1>設定</h1>
-
-            <div class="settings-section">
-                <h3>ゲーム設定</h3>
-                <div class="setting-item">
-                    <label class="form-label">難易度</label>
-                    <select class="form-control" id="difficulty-setting">
-                        <option value="easy">初級</option>
-                        <option value="medium">中級</option>
-                        <option value="hard">上級</option>
-                    </select>
-                </div>
-                <div class="setting-item">
-                    <label class="form-label">サウンド</label>
-                    <div class="setting-toggle">
-                        <input type="checkbox" id="sound-setting" checked>
-                        <label for="sound-setting">効果音を有効にする</label>
+            
+            <div class="tab-content active" id="overview-tab">
+                <div class="stats-overview">
+                    <div class="overview-card">
+                        <h3>総プレイ時間</h3>
+                        <div class="overview-value" id="total-play-time">0分</div>
+                    </div>
+                    <div class="overview-card">
+                        <h3>総ゲーム数</h3>
+                        <div class="overview-value" id="total-games">0</div>
+                    </div>
+                    <div class="overview-card">
+                        <h3>最高スコア</h3>
+                        <div class="overview-value" id="best-score">0</div>
                     </div>
                 </div>
             </div>
-
-            <div class="settings-section">
-                <h3>通知設定</h3>
-                <div class="setting-item">
-                    <label class="form-label">リマインダー</label>
-                    <div class="setting-toggle">
-                        <input type="checkbox" id="reminder-setting">
-                        <label for="reminder-setting">毎日の通知を有効にする</label>
+            
+            <div class="tab-content" id="games-tab">
+                <div class="game-stats" id="game-stats">
+                    <!-- 動的に生成 -->
+                </div>
+            </div>
+            
+            <div class="tab-content" id="progress-tab">
+                <div class="progress-chart">
+                    <h3>週間進捗</h3>
+                    <div class="chart-container" id="progress-chart">
+                        <!-- 簡単なバーチャート -->
                     </div>
                 </div>
-                <div class="setting-item">
-                    <label class="form-label">通知時間</label>
-                    <input type="time" class="form-control" id="reminder-time" value="20:00">
+            </div>
+        </div>
+
+        <!-- 設定画面 -->
+        <div id="settings-screen" class="app-screen hidden">
+            <h2>設定</h2>
+            <div class="settings-content">
+                <div class="setting-group">
+                    <h3>ゲーム設定</h3>
+                    <div class="setting-item">
+                        <label class="form-label">難易度</label>
+                        <select class="form-control" id="difficulty-setting">
+                            <option value="easy">簡単</option>
+                            <option value="normal" selected>普通</option>
+                            <option value="hard">難しい</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label class="form-label">サウンド</label>
+                        <label class="switch">
+                            <input type="checkbox" id="sound-setting" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
                 </div>
-            </div>
-
-            <div class="settings-section">
-                <h3>データ管理</h3>
-                <div class="setting-item"><button class="btn btn--secondary" id="export-data-btn">データをエクスポート</button></div>
-                <div class="setting-item"><button class="btn btn--outline" id="reset-data-btn">データをリセット</button></div>
-            </div>
-
-            <div class="settings-section">
-                <h3>アプリについて</h3>
-                <div class="app-info"><p>バージョン: 1.0.0</p><p>前頭前野を鍛える包括的な脳トレーニングアプリ</p></div>
+                
+                <div class="setting-group">
+                    <h3>表示設定</h3>
+                    <div class="setting-item">
+                        <label class="form-label">テーマ</label>
+                        <select class="form-control" id="theme-setting">
+                            <option value="light">ライト</option>
+                            <option value="dark">ダーク</option>
+                            <option value="auto">自動</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="setting-group">
+                    <h3>データ管理</h3>
+                    <button class="btn btn--outline" id="reset-data">データをリセット</button>
+                    <p class="setting-note">すべての進捗データが削除されます</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Install Prompt -->
-<div id="install-prompt" class="install-prompt hidden">
-    <div class="install-content">
-        <span class="install-icon">📱</span>
-        <span class="install-text">アプリをホーム画面に追加しますか？</span>
-        <button class="btn btn--primary btn--sm" id="install-btn">追加</button>
-        <button class="btn btn--outline btn--sm" id="dismiss-install">後で</button>
-    </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="app.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
