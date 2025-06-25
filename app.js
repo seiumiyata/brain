@@ -75,7 +75,6 @@ class BrainTrainingApp {
         this.setupEventListeners();
         this.updateDailyStreak();
         
-        // Show loading screen briefly
         setTimeout(() => {
             if (this.userData.hasSeenWelcome) {
                 this.showScreen('main-app');
@@ -86,7 +85,6 @@ class BrainTrainingApp {
         }, 1500);
     }
 
-    // Service Worker Registration
     async registerServiceWorker() {
         if ('serviceWorker' in navigator) {
             try {
@@ -127,9 +125,7 @@ class BrainTrainingApp {
         });
     }
 
-    // Event Listeners
     setupEventListeners() {
-        // Welcome screen
         const startBtn = document.getElementById('start-app-btn');
         if (startBtn) {
             startBtn.addEventListener('click', () => {
@@ -140,16 +136,14 @@ class BrainTrainingApp {
             });
         }
 
-        // Navigation
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', (e) => {
-                const screen = e.target.dataset.screen;
+                const screen = e.target.closest('.nav-item').dataset.screen;
                 this.showAppScreen(screen);
                 this.updateNavigation(screen);
             });
         });
 
-        // Game selection
         document.addEventListener('click', (e) => {
             if (e.target.closest('.game-card')) {
                 const gameId = e.target.closest('.game-card').dataset.gameId;
@@ -157,32 +151,25 @@ class BrainTrainingApp {
             }
         });
 
-        // Game controls
         const backBtn = document.getElementById('back-to-games');
         if (backBtn) {
             backBtn.addEventListener('click', () => {
-                this.stopCurrentGame(); // 重要：ゲームを完全停止
+                this.stopCurrentGame();
                 this.showAppScreen('games');
             });
         }
 
-        const playAgainBtn = document.getElementById('play-again-btn');
-        if (playAgainBtn) {
-            playAgainBtn.addEventListener('click', () => {
+        document.addEventListener('click', (e) => {
+            if (e.target.id === 'play-again-btn') {
                 if (this.currentGame) {
                     this.startGame(this.currentGame.id);
                 }
-            });
-        }
-
-        const continueBtn = document.getElementById('continue-btn');
-        if (continueBtn) {
-            continueBtn.addEventListener('click', () => {
+            }
+            if (e.target.id === 'continue-btn') {
                 this.showAppScreen('dashboard');
-            });
-        }
+            }
+        });
 
-        // Stats tabs
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const tab = e.target.dataset.tab;
@@ -190,7 +177,6 @@ class BrainTrainingApp {
             });
         });
 
-        // Settings
         const difficultySettings = document.getElementById('difficulty-setting');
         if (difficultySettings) {
             difficultySettings.addEventListener('change', (e) => {
@@ -240,30 +226,24 @@ class BrainTrainingApp {
         }
     }
 
-    // ゲーム停止処理を追加
     stopCurrentGame() {
-        // タイマーをクリア
         if (this.gameTimer) {
             clearInterval(this.gameTimer);
             this.gameTimer = null;
         }
         
-        // すべてのタイムアウトをクリア
         this.gameTimeouts.forEach(timeout => clearTimeout(timeout));
         this.gameTimeouts = [];
         
-        // ゲームセッションをクリア
         this.gameSession = null;
         this.currentGame = null;
         
-        // ゲーム画面の要素をクリア
         const gameContainer = document.querySelector('.game-container');
         if (gameContainer) {
             gameContainer.innerHTML = '';
         }
     }
 
-    // Screen Management
     showScreen(screenId) {
         document.querySelectorAll('.screen, #main-app').forEach(screen => {
             screen.classList.add('hidden');
@@ -290,7 +270,6 @@ class BrainTrainingApp {
             screen.classList.remove('hidden');
         }
 
-        // Update content based on screen
         switch (screenId) {
             case 'dashboard':
                 this.updateDashboard();
@@ -316,9 +295,7 @@ class BrainTrainingApp {
         });
     }
 
-    // Dashboard Updates
     updateDashboard() {
-        // Update date
         const now = new Date();
         const dateElement = document.getElementById('current-date');
         if (dateElement) {
@@ -330,7 +307,6 @@ class BrainTrainingApp {
             });
         }
 
-        // Update stats
         const dailyGoalElement = document.getElementById('daily-goal-progress');
         if (dailyGoalElement) {
             dailyGoalElement.textContent = `${this.userData.dailyProgress.gamesPlayed}/3`;
@@ -351,7 +327,6 @@ class BrainTrainingApp {
             streakElement.textContent = this.userData.currentStreak;
         }
 
-        // Update progress bar
         const progress = Math.min(100, (this.userData.dailyProgress.gamesPlayed / 3) * 100);
         const progressBar = document.getElementById('daily-progress');
         const progressText = document.getElementById('progress-text');
@@ -363,10 +338,7 @@ class BrainTrainingApp {
             progressText.textContent = `${Math.round(progress)}%`;
         }
 
-        // Update recommended games
         this.updateRecommendedGames();
-
-        // Update recent badges
         this.updateRecentBadges();
     }
 
@@ -412,12 +384,11 @@ class BrainTrainingApp {
         }
     }
 
-    // Game Management
     startGame(gameId) {
         const game = this.gameData.games.find(g => g.id === gameId);
         if (!game) return;
 
-        this.stopCurrentGame(); // 既存のゲームを停止
+        this.stopCurrentGame();
         this.currentGame = game;
         this.gameSession = this.createGameSession(game);
         
@@ -439,24 +410,20 @@ class BrainTrainingApp {
     }
 
     showGameScreen() {
-        // Hide all app screens
         document.querySelectorAll('.app-screen').forEach(screen => {
             screen.classList.add('hidden');
         });
         
-        // Show game screen
         const gameScreen = document.getElementById('game-screen');
         if (gameScreen) {
             gameScreen.classList.remove('hidden');
         }
         
-        // Update game header
         const gameTitle = document.querySelector('.game-title');
         if (gameTitle) {
             gameTitle.textContent = this.currentGame.name;
         }
         
-        // Initialize game stats display
         this.updateGameStats();
     }
 
@@ -479,12 +446,10 @@ class BrainTrainingApp {
     runGame() {
         if (!this.gameSession) return;
         
-        // Start game timer for stats
         this.gameTimer = setInterval(() => {
             this.updateGameStats();
         }, 1000);
         
-        // Run specific game logic
         switch (this.currentGame.id) {
             case 'janken':
                 this.runJankenGame();
@@ -504,7 +469,6 @@ class BrainTrainingApp {
         }
     }
 
-    // Game Implementations
     runJankenGame() {
         const container = document.querySelector('.game-container');
         const instructions = ['勝ってください', '負けてください', '引き分けにしてください'];
@@ -542,7 +506,6 @@ class BrainTrainingApp {
                 </div>
             `;
             
-            // Add choice event listeners
             container.querySelectorAll('.game-option').forEach(option => {
                 option.addEventListener('click', (e) => {
                     const playerChoice = parseInt(e.currentTarget.dataset.choice);
@@ -566,7 +529,6 @@ class BrainTrainingApp {
         
         this.recordAnswer(correct);
         
-        // Show feedback
         const options = document.querySelectorAll('.game-option');
         options.forEach(option => {
             option.disabled = true;
@@ -666,10 +628,8 @@ class BrainTrainingApp {
                 return;
             }
             
-            // Add new number to sequence
             sequence.push(Math.floor(Math.random() * 9) + 1);
             
-            // Show sequence
             this.showNumberSequence(sequence, () => {
                 this.collectNumberInput(sequence, nextRound);
             });
@@ -794,7 +754,6 @@ class BrainTrainingApp {
                     break;
             }
             
-            // Generate options
             const options = [correctAnswer];
             while (options.length < 4) {
                 const wrong = correctAnswer + (Math.floor(Math.random() * 10) - 5);
@@ -803,7 +762,6 @@ class BrainTrainingApp {
                 }
             }
             
-            // Shuffle options
             for (let i = options.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [options[i], options[j]] = [options[j], options[i]];
@@ -887,7 +845,10 @@ class BrainTrainingApp {
             container.querySelectorAll('.game-option').forEach(option => {
                 option.addEventListener('click', (e) => {
                     const answer = e.currentTarget.dataset.answer;
-                    this.checkHighLowAnswer(answer, currentNumber, previousNumber, nextRound);
+                    this.checkHighLowAnswer(answer, currentNumber, previousNumber, () => {
+                        previousNumber = currentNumber;
+                        nextRound();
+                    });
                 });
             });
             
@@ -903,7 +864,6 @@ class BrainTrainingApp {
         
         this.recordAnswer(isCorrect);
         
-        // Show the actual number
         const questionArea = document.querySelector('.game-question');
         questionArea.querySelector('div[style*="font-size: 4rem"]').textContent = current;
         
@@ -941,15 +901,12 @@ class BrainTrainingApp {
         
         this.stopCurrentGame();
         
-        // Calculate final score and statistics
         const duration = Date.now() - this.gameSession.startTime;
         const accuracy = this.gameSession.totalQuestions > 0 ? 
             Math.round((this.gameSession.correctAnswers / this.gameSession.totalQuestions) * 100) : 0;
         
-        // Update user data
         this.updateUserProgress(this.gameSession);
         
-        // Show results
         this.showGameResults({
             score: this.gameSession.score,
             accuracy,
@@ -995,14 +952,10 @@ class BrainTrainingApp {
     }
 
     updateUserProgress(session) {
-        // Update points
         this.userData.totalPoints += session.score;
-        
-        // Update daily progress
         this.userData.dailyProgress.gamesPlayed++;
         this.userData.dailyProgress.pointsEarned += session.score;
         
-        // Update game statistics
         if (!this.userData.gameStats[session.gameId]) {
             this.userData.gameStats[session.gameId] = {
                 timesPlayed: 0,
@@ -1018,14 +971,10 @@ class BrainTrainingApp {
         gameStats.bestScore = Math.max(gameStats.bestScore, session.score);
         gameStats.totalTime += Date.now() - session.startTime;
         
-        // Check for new badges
         this.checkForNewBadges();
-        
-        // Save data
         this.saveUserData();
     }
 
-    // User Data Management
     loadUserData() {
         const defaultData = {
             hasSeenWelcome: false,
@@ -1068,7 +1017,6 @@ class BrainTrainingApp {
         }
     }
 
-    // Utility Methods
     getCurrentLevel() {
         const points = this.userData.totalPoints;
         for (let i = this.gameData.levels.length - 1; i >= 0; i--) {
@@ -1080,7 +1028,6 @@ class BrainTrainingApp {
     }
 
     getRecommendedGames() {
-        // Simple recommendation: return 3 random games
         const shuffled = [...this.gameData.games].sort(() => 0.5 - Math.random());
         return shuffled.slice(0, 3);
     }
@@ -1090,14 +1037,12 @@ class BrainTrainingApp {
         const lastPlay = this.userData.lastPlayDate;
         
         if (lastPlay !== today) {
-            // Reset daily progress
             this.userData.dailyProgress = {
                 date: today,
                 gamesPlayed: 0,
                 pointsEarned: 0
             };
             
-            // Update streak
             if (lastPlay) {
                 const lastDate = new Date(lastPlay);
                 const todayDate = new Date(today);
@@ -1119,7 +1064,6 @@ class BrainTrainingApp {
     checkForNewBadges() {
         const newBadges = [];
         
-        // Check each badge condition
         this.gameData.badges.forEach(badge => {
             if (!this.userData.badges.includes(badge.id)) {
                 let earned = false;
@@ -1174,7 +1118,6 @@ class BrainTrainingApp {
     }
 
     showStatsTab(tab) {
-        // Update tab buttons
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.classList.remove('active');
             if (btn.dataset.tab === tab) {
@@ -1182,7 +1125,6 @@ class BrainTrainingApp {
             }
         });
         
-        // Show appropriate content
         const content = document.getElementById('stats-content');
         if (!content) return;
         
@@ -1281,7 +1223,6 @@ class BrainTrainingApp {
     }
 
     updateSettingsScreen() {
-        // Update form values
         const difficultySelect = document.getElementById('difficulty-setting');
         if (difficultySelect) {
             difficultySelect.value = this.userData.settings.difficulty;
@@ -1322,7 +1263,6 @@ class BrainTrainingApp {
     }
 }
 
-// Initialize the app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new BrainTrainingApp();
 });
