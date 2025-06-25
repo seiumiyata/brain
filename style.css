@@ -266,13 +266,52 @@ a:hover {
     padding: var(--space-16);
 }
 
-/* App layout */
+/* 🎯 デスクトップレスポンシブ対応 - 重要な修正 */
 .app-container {
-    max-width: 400px;
+    width: 100%;
     margin: 0 auto;
     min-height: 100vh;
     background-color: var(--color-background);
     position: relative;
+}
+
+/* デスクトップでの中央寄せとレイアウト改善 */
+@media (min-width: 768px) {
+    body {
+        background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+        padding: var(--space-20);
+    }
+    
+    .app-container {
+        max-width: 420px;
+        width: 100%;
+        background-color: var(--color-background);
+        border-radius: var(--radius-lg);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        min-height: calc(100vh - 40px);
+    }
+    
+    .welcome-screen {
+        border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        min-height: calc(100vh - 40px);
+    }
+    
+    .welcome-content {
+        max-width: 350px;
+        margin: 0 auto;
+        padding: var(--space-32);
+    }
+}
+
+@media (min-width: 1024px) {
+    .app-container {
+        max-width: 450px;
+    }
 }
 
 /* Loading screen */
@@ -491,6 +530,7 @@ a:hover {
 .game-card:hover {
     box-shadow: var(--shadow-md);
     transform: translateY(-2px);
+    border-color: var(--color-primary);
 }
 
 .game-icon {
@@ -525,7 +565,7 @@ a:hover {
     font-size: var(--font-size-xs);
 }
 
-/* Game Screen - ダークモード対応を強化 */
+/* Game Screen - ダークモード対応強化 */
 .game-screen {
     background-color: var(--color-background);
     color: var(--color-text);
@@ -568,7 +608,7 @@ a:hover {
     background-color: var(--color-secondary);
 }
 
-/* Game Container - ダークモード対応を強化 */
+/* Game Container - ダークモード対応強化 */
 .game-container {
     padding: var(--space-32) var(--space-20);
     background-color: var(--color-background);
@@ -651,13 +691,13 @@ a:hover {
 
 .game-option.correct {
     border-color: var(--color-success);
-    background-color: rgba(var(--color-success), 0.1);
+    background-color: rgba(50, 184, 198, 0.1);
     color: var(--color-success);
 }
 
 .game-option.incorrect {
     border-color: var(--color-error);
-    background-color: rgba(var(--color-error), 0.1);
+    background-color: rgba(255, 84, 89, 0.1);
     color: var(--color-error);
 }
 
